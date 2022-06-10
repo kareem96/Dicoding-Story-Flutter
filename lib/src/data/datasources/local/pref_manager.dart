@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ActiveTheme{
+enum ActiveTheme {
   light,
   dark,
   system,
@@ -26,7 +26,7 @@ class PrefManager{
   bool get isLogin => preferences.getBool(kIsLogin) ?? false;
 
   set token(String? value) => preferences.setString(kToken, value ?? "");
-  String? get token => preferences.getString(kToken);
+  String?  get token => preferences.getString(kToken);
 
   set fcmToken(String? value) => preferences.setString(kFCM, value ?? "");
   String? get fcmToken => preferences.getString(kFCM);
@@ -43,8 +43,8 @@ class PrefManager{
   set icon(String? value) => preferences.setString(kIcon, value ?? "");
   String? get icon => preferences.getString(kIcon);
 
-  set locale(String? value) => preferences.setString(kLocale, value ?? "");
-  String? get locale => preferences.getString(kLocale) ?? "";
+  set locale(String? value) => preferences.setString(kLocale, value ?? "en");
+  String get locale => preferences.getString(kLocale) ?? "en";
 
   set theme(String? value) => preferences.setString(kTheme, value ?? describeEnum(ActiveTheme.system));
   String get theme => preferences.getString(kTheme) ?? describeEnum(ActiveTheme.system);

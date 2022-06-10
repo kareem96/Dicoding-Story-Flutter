@@ -33,16 +33,17 @@ class DioInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     String headerMessage = "";
-    response.headers.forEach((k, v) => headerMessage += " $k: $v\n");
-    const JsonEncoder encoder = JsonEncoder.withIndent("");
+    response.headers.forEach((k, v) => headerMessage += '► $k: $v\n');
+
+    const JsonEncoder encoder = JsonEncoder.withIndent(" ");
     final String prettyJson = encoder.convert(response.data);
     log.d(
       // ignore: unnecessary_null_comparison
       "◀ ︎RESPONSE ${response.statusCode} ${response.requestOptions != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL'}\n\n"
-      "Headers:\n"
-      "$headerMessage\n"
-      "❖ Results : \n"
-      "Response: $prettyJson",
+          "Headers:\n"
+          "$headerMessage\n"
+          "❖ Results : \n"
+          "Response: $prettyJson",
     );
     super.onResponse(response, handler);
   }

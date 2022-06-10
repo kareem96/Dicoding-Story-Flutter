@@ -2,10 +2,9 @@ import 'package:dicoding_story_flutter/src/data/datasources/datasources.dart';
 import 'package:dicoding_story_flutter/src/di/di.dart';
 import 'package:dio/dio.dart';
 
-import 'dio_interceptor.dart';
-
 class DioClient {
-  String baseUrl = "https://reqres.in";
+  /*String baseUrl = "https://reqres.in";*/
+  String baseUrl = "https://story-api.dicoding.dev";
 
   String? _auth;
   bool _isUnitTest = false;
@@ -57,10 +56,13 @@ class DioClient {
   }
 
 
-  Future<Response> postRequest(String url, { Map<String, dynamic>? data,}) async{
-    try{
+  Future<Response> postRequest(
+      String url, {
+        Map<String, dynamic>? data,
+      }) async {
+    try {
       return await dio.post(url, data: data);
-    }on DioError catch (e){
+    } on DioError catch (e) {
       throw Exception(e.message);
     }
   }
