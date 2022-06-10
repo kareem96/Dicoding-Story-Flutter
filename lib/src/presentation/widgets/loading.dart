@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class Loading extends StatelessWidget {
   final bool showMessage;
-
   const Loading({Key? key, this.showMessage = true}) : super(key: key);
 
   @override
@@ -17,10 +16,10 @@ class Loading extends StatelessWidget {
           const ColorLoader(),
           Visibility(
             visible: showMessage,
-              child: Text(
-                Strings.of(context)!.pleaseWait,
-                style: Theme.of(context).textTheme.bodyText2,
-              )
+            child: Text(
+              Strings.of(context)!.pleaseWait,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           )
         ],
       ),

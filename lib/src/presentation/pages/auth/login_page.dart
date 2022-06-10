@@ -43,10 +43,10 @@ class _LoginPageState extends State<LoginPage> {
               break;
             case LoginStatus.success:
               context.dismiss();
-              // state.login?.loginResult?.token?.toToastSuccess();
+              state.login?.loginResult?.token?.toToastSuccess();
               TextInput.finishAutofillContext();
-              /*context.goToReplace(AppRoute.mainScreen);*/
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              context.goToReplace(AppRoute.mainScreen);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("Success!")
               ));
               break;
@@ -72,25 +72,24 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SpacerVertical(),
                       TextForm(
-                        autofillHints: const [AutofillHints.email],
-                        key: const Key("email"),
-                        curFocusNode: _fnEmail,
-                        nextFocusNode: _fnPassword,
-                        textInputAction: TextInputAction.next,
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: Icon(
-                          Icons.alternate_email,
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                        hintText: "email@gmail.com",
-                        hint: Strings.of(context)!.email,
-                        validator: (String? value) => value != null
-                            ? (!value.isValidEmail()
-                                ? Strings.of(context)?.errorInvalidEmail
-                                : null)
-                            : null,
-                      ),
+                          autofillHints: const [AutofillHints.email],
+                          key: const Key("email"),
+                          curFocusNode: _fnEmail,
+                          nextFocusNode: _fnPassword,
+                          textInputAction: TextInputAction.next,
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: Icon(
+                            Icons.alternate_email,
+                            color: Theme.of(context).textTheme.bodyText1?.color,
+                          ),
+                          hintText: 'email@gmail.com',
+                          hint: Strings.of(context)!.email,
+                          validator: (String? value) => value != null
+                              ? (!value.isValidEmail()
+                              ? Strings.of(context)?.errorInvalidEmail
+                              : null)
+                              : null),
                       TextForm(
                         autofillHints: const [AutofillHints.password],
                         key: const Key("password"),
@@ -111,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                           constraints: const BoxConstraints(),
                           onPressed: () {
                             setState(
-                              () {
+                                  () {
                                 _isPasswordHide = !_isPasswordHide;
                               },
                             );
@@ -124,8 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         validator: (String? value) => value != null
                             ? (value.length < 3
-                                ? Strings.of(context)!.errorEmptyField
-                                : null)
+                            ? Strings.of(context)!.errorEmptyField
+                            : null)
                             : null,
                       ),
                       SpacerVertical(
@@ -134,14 +133,22 @@ class _LoginPageState extends State<LoginPage> {
                       Button(
                         title: Strings.of(context)!.login,
                         onPressed: () {
-                          if(_keyForm.currentState?.validate() ?? false){
-                            context.read<LoginCubit>().login(LoginParams(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            ));
+                          if (_keyForm.currentState?.validate() ?? false) {
+                            context.read<LoginCubit>().login(
+                              LoginParams(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              ),
+                            );
                           }
                         },
-                      )
+                      ),
+                      /*ButtonText(
+                        title: Strings.of(context)!.askRegister,
+                        onPressed: () {
+                          context.goTo(AppRoute.register);
+                        },
+                      )*/
                     ],
                   ),
                 ),
