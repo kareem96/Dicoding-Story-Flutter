@@ -1,6 +1,4 @@
 import 'package:dicoding_story_flutter/src/core/core.dart';
-import 'package:dicoding_story_flutter/src/data/data.dart';
-import 'package:dicoding_story_flutter/src/di/di.dart';
 import 'package:dicoding_story_flutter/src/presentation/pages/auth/auth.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
@@ -44,9 +42,8 @@ class _LoginPageState extends State<LoginPage> {
               state.login?.loginResult?.token?.toToastSuccess();
               TextInput.finishAutofillContext();
               context.goToReplace(AppRoute.mainScreen);
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Success!")
-              ));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Success!")));
               break;
             case LoginStatus.failure:
               context.dismiss();
@@ -85,8 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                           hint: Strings.of(context)!.email,
                           validator: (String? value) => value != null
                               ? (!value.isValidEmail()
-                              ? Strings.of(context)?.errorInvalidEmail
-                              : null)
+                                  ? Strings.of(context)?.errorInvalidEmail
+                                  : null)
                               : null),
                       TextForm(
                         autofillHints: const [AutofillHints.password],
@@ -108,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                           constraints: const BoxConstraints(),
                           onPressed: () {
                             setState(
-                                  () {
+                              () {
                                 _isPasswordHide = !_isPasswordHide;
                               },
                             );
@@ -121,8 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         validator: (String? value) => value != null
                             ? (value.length < 3
-                            ? Strings.of(context)!.errorEmptyField
-                            : null)
+                                ? Strings.of(context)!.errorEmptyField
+                                : null)
                             : null,
                       ),
                       SpacerVertical(
@@ -133,20 +130,20 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           if (_keyForm.currentState?.validate() ?? false) {
                             context.read<LoginCubit>().login(
-                              LoginParams(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              ),
-                            );
+                                  LoginParams(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  ),
+                                );
                           }
                         },
                       ),
-                      /*ButtonText(
+                      ButtonText(
                         title: Strings.of(context)!.askRegister,
                         onPressed: () {
                           context.goTo(AppRoute.register);
                         },
-                      )*/
+                      )
                     ],
                   ),
                 ),

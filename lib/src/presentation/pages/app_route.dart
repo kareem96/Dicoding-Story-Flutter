@@ -26,6 +26,10 @@ class AppRoute {
         login: (_) => BlocProvider(
               create: (_) => sl<LoginCubit>(),
               child: const LoginPage(),
+            ),
+        register: (_) => BlocProvider(
+              create: (_) => sl<RegisterCubit>(),
+              child: const RegisterPage(),
             )
       };
 }

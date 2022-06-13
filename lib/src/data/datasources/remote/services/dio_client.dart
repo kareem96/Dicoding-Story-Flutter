@@ -37,11 +37,9 @@ class DioClient {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Bearer $_auth",
-        /*"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUgxMEQtODVrdlJKOWVSM00iLCJpYXQiOjE2NTUwODY0NDl9.Y48qjybGrdHJ6jS8lLf_k--4W470IyoCqrsVWHcfTeY",*/
-        /*if (_auth != null) ...{
-          "Authorization": _auth,
-        }*/
+        if (_auth != null) ...{
+          "Authorization": "Bearer $_auth",
+        }
       },
       receiveTimeout: 60000,
       connectTimeout: 60000,

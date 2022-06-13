@@ -4,6 +4,7 @@ import 'package:dicoding_story_flutter/src/domain/usecase/auth/auth.dart';
 
 abstract class AuthRemoteDatasource {
   Future<LoginResponse> login(LoginParams loginParams);
+  Future<RegisterResponse> register(RegisterParams registerParams);
   Future<StoriesResponse> stories(StoriesParams storiesParams);
 }
 
@@ -37,6 +38,21 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         return _result;
       }else{
         throw ServerException(_result.message);
+      }
+    }on ServerException catch (e){
+      throw ServerException(e.message);
+    }
+  }
+
+  @override
+  Future<RegisterResponse> register(RegisterParams registerParams) async{
+    try{
+      final _response = await _client.postRequest(ListApi.register, data: registerParams.toJson());
+      final _result = RegisterResponse.fromJson(_response.data);
+      if(_response.statusCode == 200){
+        return _result;
+      }else{
+        throw ServerException(_result.error);
       }
     }on ServerException catch (e){
       throw ServerException(e.message);

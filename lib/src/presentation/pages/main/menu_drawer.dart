@@ -28,45 +28,42 @@ class _MenuDrawerState extends State<MenuDrawer> {
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             width: context.widthInPercent(100),
             height: Dimens.header,
             padding: EdgeInsets.symmetric(horizontal: Dimens.space16),
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             child: SafeArea(
               child: Row(
                 children: [
-                  CircleImage(url: "Conta", size: Dimens.profilePicture),
-                  SpacerHorizontal(),
+                  CircleImage(
+                    size: Dimens.profilePicture,
+                    url: Constants.get.imagePlaceHolder,
+                  ),
+                  const SpacerHorizontal(),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "KDev Labs",
-                          style: Theme
-                              .of(context)
+                          "LazyCat Labs",
+                          style: Theme.of(context)
                               .textTheme
                               .headline6
                               ?.copyWith(color: Palette.white),
                         ),
                         Text(
-                          "ak339444@gmail.com",
-                          style: Theme
-                              .of(context)
+                          "lazycatlabs@gmail.com",
+                          style: Theme.of(context)
                               .textTheme
                               .caption
-                              ?.copyWith(color: Theme
-                              .of(context)
-                              .hintColor),
-                        )
+                              ?.copyWith(color: Theme.of(context).hintColor),
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -74,33 +71,40 @@ class _MenuDrawerState extends State<MenuDrawer> {
           const SpacerVertical(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.dataMenu.map<Widget>((value) => SizedBox(
-              width: double.maxFinite,
-              child: InkWell(
-                onTap: (){
-                  for(final menu in widget.dataMenu){
-                    menu.isSelected = menu.title == value.title;
-                    if(value.title != null){
-                      widget.currentIndex(
-                        widget.dataMenu.indexOf(value),
-                      );
+            children: widget.dataMenu
+                .map<Widget>(
+                  (value) => SizedBox(
+                width: double.maxFinite,
+                child: InkWell(
+                  onTap: () {
+                    for (final menu in widget.dataMenu) {
+                      menu.isSelected = menu.title == value.title;
+
+                      if (value.title != null) {
+                        widget.currentIndex(
+                          widget.dataMenu.indexOf(value),
+                        );
+                      }
                     }
-                  }
-                  _selectedPage(value.title!);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: Dimens.space12,
-                    horizontal: Dimens.space24,
-                  ),
-                  child: Text(
-                    value.title!,
-                    style: Theme.of(context).textTheme.bodyText1,
+
+                    _selectedPage(value.title!);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: Dimens.space12,
+                      horizontal: Dimens.space24,
+                    ),
+                    child: Text(
+                      value.title!,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                 ),
               ),
-            ),).toList(),
-          )
+            )
+                .toList(),
+          ), //
+          const SpacerHorizontal(),
         ],
       ),
     );
