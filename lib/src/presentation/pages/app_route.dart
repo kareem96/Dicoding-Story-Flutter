@@ -18,11 +18,10 @@ class AppRoute {
   static Map<String, WidgetBuilder> getRoutes({RouteSettings? settings}) => {
         splashScreen: (_) => const SplashScreenPage(),
         mainScreen: (_) {
-          return MainPage();
-          /*return BlocProvider(
+          return BlocProvider(
             create: (_) => sl<NavDrawerCubit>(),
             child: const MainPage(),
-          );*/
+          );
         },
         login: (_) => BlocProvider(
               create: (_) => sl<LoginCubit>(),

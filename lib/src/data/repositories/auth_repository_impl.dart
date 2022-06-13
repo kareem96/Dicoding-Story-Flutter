@@ -2,8 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dicoding_story_flutter/src/core/core.dart';
 import 'package:dicoding_story_flutter/src/data/datasources/datasources.dart';
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
-import 'package:dicoding_story_flutter/src/domain/entities/auth/login.dart';
-import 'package:dicoding_story_flutter/src/domain/usecase/auth/post_login.dart';
 
 class AuthRepositoryImpl implements AuthRepository{
   final AuthRemoteDatasource authRemoteDatasource;
@@ -18,6 +16,20 @@ class AuthRepositoryImpl implements AuthRepository{
     }on ServerException catch (e){
       return Left(ServerFailure(e.message));
     }
+  }
+
+  @override
+  Future<Either<Failure, Stories>> stories(StoriesParams storiesParams) async {
+    try{
+      final _response = await authRemoteDatasource.stories(storiesParams);
+      if(_response.data?.isEmpty ?? true){
+        return Left(NoDataFailure());
+      }
+      return Right(_response.toEntity());
+    }on ServerException catch (e){
+      return Left(ServerFailure(e.message));
+    }
+
   }
 
 }

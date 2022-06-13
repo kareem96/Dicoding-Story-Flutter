@@ -20,11 +20,13 @@ Future<void> main() async {
   await serviceLocator();
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.light));
-  runZonedGuarded(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    ),
+  );  runZonedGuarded(
           () => SystemChrome.setPreferredOrientations(
         [
           DeviceOrientation.portraitUp,

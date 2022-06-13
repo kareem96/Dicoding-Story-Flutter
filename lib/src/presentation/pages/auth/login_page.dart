@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:dicoding_story_flutter/src/core/core.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/app_route.dart';
+import 'package:dicoding_story_flutter/src/data/data.dart';
+import 'package:dicoding_story_flutter/src/di/di.dart';
 import 'package:dicoding_story_flutter/src/presentation/pages/auth/auth.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../domain/usecase/auth/auth.dart';
-import '../../widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

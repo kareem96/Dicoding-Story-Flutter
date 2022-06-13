@@ -25,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
       }
     }, (r) {
       sl<PrefManager>().isLogin = true;
-      // sl<PrefManager>().token = r.loginResult?.token;
+      sl<PrefManager>().token = r.loginResult?.token;
       emit(state.copyWith(status: LoginStatus.success, login: r));
     });
   }

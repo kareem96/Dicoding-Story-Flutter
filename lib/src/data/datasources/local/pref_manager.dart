@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dicoding_story_flutter/src/domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +30,7 @@ class PrefManager{
 
   set token(String? value) => preferences.setString(kToken, value ?? "");
   String?  get token => preferences.getString(kToken);
-
+  
   set fcmToken(String? value) => preferences.setString(kFCM, value ?? "");
   String? get fcmToken => preferences.getString(kFCM);
 

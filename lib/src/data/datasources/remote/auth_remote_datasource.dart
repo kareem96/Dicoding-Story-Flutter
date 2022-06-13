@@ -4,6 +4,7 @@ import 'package:dicoding_story_flutter/src/domain/usecase/auth/auth.dart';
 
 abstract class AuthRemoteDatasource {
   Future<LoginResponse> login(LoginParams loginParams);
+  Future<StoriesResponse> stories(StoriesParams storiesParams);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -26,4 +27,20 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       throw ServerException(e.message);
     }
   }
+
+  @override
+  Future<StoriesResponse> stories(StoriesParams storiesParams) async{
+    try{
+      final _response = await _client.getRequest(ListApi.stories,);
+      final _result = StoriesResponse.fromJson(_response.data);
+      if(_response.statusCode == 200){
+        return _result;
+      }else{
+        throw ServerException(_result.message);
+      }
+    }on ServerException catch (e){
+      throw ServerException(e.message);
+    }
+  }
+
 }

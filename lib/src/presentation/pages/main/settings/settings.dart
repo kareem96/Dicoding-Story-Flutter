@@ -1,1 +1,2 @@
-export 'setting_cubit.dart';
+export 'cubit/cubit.dart';
+export 'settings_page.dart';
