@@ -80,4 +80,7 @@ class StringsIn extends Strings{
 
   @override
   String get yes => 'Ya';
+
+  @override
+  String get name => "Nama";
 }

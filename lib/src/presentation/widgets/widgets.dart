@@ -10,3 +10,4 @@ export 'circle_image.dart';
 export 'empty.dart';
 export 'button_text.dart';
 export 'my_app_bar.dart';
+export 'pick_image.dart';

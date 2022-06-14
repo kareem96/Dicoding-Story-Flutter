@@ -1,6 +1,6 @@
 import 'package:dicoding_story_flutter/src/di/di.dart';
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/dashboard/dashboard.dart';
+import 'package:dicoding_story_flutter/src/presentation/pages/main/dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

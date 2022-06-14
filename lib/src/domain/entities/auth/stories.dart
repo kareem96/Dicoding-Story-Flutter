@@ -1,4 +1,3 @@
-import 'package:dicoding_story_flutter/src/domain/entities/auth/stories.dart';
 import 'package:equatable/equatable.dart';
 
 class Stories extends Equatable {

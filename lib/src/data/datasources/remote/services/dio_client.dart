@@ -1,5 +1,6 @@
 import 'package:dicoding_story_flutter/src/data/datasources/datasources.dart';
 import 'package:dicoding_story_flutter/src/di/di.dart';
+import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {
@@ -58,13 +59,18 @@ class DioClient {
     }
   }
 
-  Future<Response> postRequest(
-    String url, {
-    Map<String, dynamic>? data,
-  }) async {
+  Future<Response> postRequest(String url, {Map<String, dynamic>? data,}) async {
     try {
       return await dio.post(url, data: data);
     } on DioError catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<Response> postMultipart() async{
+    try{
+      return await dio.post("path");
+    }on DioError catch (e){
       throw Exception(e.message);
     }
   }

@@ -1,9 +1,11 @@
-import 'package:dicoding_story_flutter/src/presentation/pages/dashboard/cubit/cubit.dart';
+import 'package:dicoding_story_flutter/src/presentation/pages/main/cubit/cubit.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
+import 'package:dicoding_story_flutter/src/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/domain.dart';
+import '../../../../domain/domain.dart';
+import 'cubit/cubit.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -133,6 +135,13 @@ class _DashboardPageState extends State<DashboardPage> {
             }
           },
         ),
+      ),
+      floatingButton: FloatingActionButton(
+        onPressed: (){
+          context.goTo(AppRoute.upload);
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child:  Icon(Icons.add, color: Theme.of(context).primaryColorLight),
       ),
     );
   }

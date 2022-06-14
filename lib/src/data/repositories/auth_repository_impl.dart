@@ -41,4 +41,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, Upload>> upload(UploadParams uploadParams) async {
+    try {
+      final _response = await authRemoteDatasource.upload(uploadParams);
+      return Right(_response.toEntity());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    }
+  }
 }

@@ -1,16 +1,15 @@
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
 import 'package:equatable/equatable.dart';
 
-class RegisterResponse extends Equatable{
+class UploadResponse extends Equatable{
   final String? message;
-  /*final String? token;*/
-  final bool? error;
+  final double? error;
 
-  const RegisterResponse({this.message, this.error});
+  const UploadResponse(this.message, this.error);
 
-  RegisterResponse.fromJson(dynamic json):
+  UploadResponse.fromJson(dynamic json):
       message = json["message"] as String?,
-      error = json["error"] as bool?;
+      error = json["error"] as double?;
 
   Map<String, dynamic> toJson(){
     final map = <String, dynamic>{};
@@ -19,12 +18,12 @@ class RegisterResponse extends Equatable{
     return map;
   }
 
-  Register toEntity() => Register(message);
-
+  Upload toEntity() => Upload(message, error);
 
   @override
   List<Object?> get props => [
     message,
     error,
   ];
+
 }

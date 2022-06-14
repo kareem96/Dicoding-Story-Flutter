@@ -81,4 +81,7 @@ class StringsEn extends Strings{
 
   @override
   String get yes => 'Yes';
+
+  @override
+  String get name => "Name";
 }

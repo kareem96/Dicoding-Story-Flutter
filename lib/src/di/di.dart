@@ -1,12 +1,12 @@
 import 'package:dicoding_story_flutter/src/data/data.dart';
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
-import 'package:dicoding_story_flutter/src/domain/usecase/auth/auth.dart';
 import 'package:dicoding_story_flutter/src/presentation/pages/auth/auth.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/dashboard/cubit/cubit.dart';
 import 'package:dicoding_story_flutter/src/presentation/pages/main/cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../presentation/pages/main/dashboard/cubit/cubit.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -32,6 +32,7 @@ Future<void> serviceLocator({bool isUnitTest = false}) async{
 }
 
 void cubit() {
+  sl.registerFactory(() => RegisterCubit(sl()));
   sl.registerFactory(() => LoginCubit(sl()));
   sl.registerFactory(() => StoriesCubit(sl()));
   sl.registerFactory(() => NavDrawerCubit());
@@ -39,6 +40,7 @@ void cubit() {
 
 void usecase() {
   sl.registerLazySingleton(() => PostLogin(sl()));
+  sl.registerLazySingleton(() => PostRegister(sl()));
   sl.registerLazySingleton(() => GetStories(sl()));
 }
 

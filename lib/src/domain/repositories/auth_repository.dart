@@ -6,4 +6,5 @@ abstract class AuthRepository{
   Future<Either<Failure, Login>> login(LoginParams loginParams);
   Future<Either<Failure, Register>> register(RegisterParams registerParams);
   Future<Either<Failure, Stories>> stories(StoriesParams storiesParams);
+  Future<Either<Failure, Upload>> upload(UploadParams uploadParams);
 }

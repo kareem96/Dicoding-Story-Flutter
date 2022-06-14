@@ -7,11 +7,11 @@ class LoginResponse extends Equatable {
   final String? message;
   final LoginResult? loginResult;
 
-  const LoginResponse({
-    /*this.error,*/
-    this.message,
-    this.loginResult
-  });
+  const LoginResponse(
+      {
+      /*this.error,*/
+      this.message,
+      this.loginResult});
 
   /*LoginResponse.fromJson(dynamic json)
       : error = json["error"] as String?,
@@ -42,13 +42,12 @@ class LoginResponse extends Equatable {
   Login toEntity() => Login(
       /*error,*/
       message,
-      loginResult
-  );
+      loginResult);
 
   @override
   List<Object?> get props => [
-    /*error,*/
-    message,
-    loginResult
-  ];
+        /*error,*/
+        message,
+        loginResult
+      ];
 }

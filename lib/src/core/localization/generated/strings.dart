@@ -81,6 +81,12 @@ abstract class Strings {
   /// **'Email'**
   String get email;
 
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
