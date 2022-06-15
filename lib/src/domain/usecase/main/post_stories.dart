@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dicoding_story_flutter/src/core/core.dart';
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
+import 'package:dio/dio.dart';
 
 class PostStories extends UseCase<Upload, UploadParams>{
   final AuthRepository _repo;
@@ -15,11 +16,11 @@ class PostStories extends UseCase<Upload, UploadParams>{
 }
 
 class UploadParams {
-  final String description;
-  final File? photo;
+  String description;
+  File? photo;
 
   UploadParams({
-    this.description = "",
+    this.description= "",
     this.photo,
   });
 

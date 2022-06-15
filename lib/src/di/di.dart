@@ -1,17 +1,15 @@
-import 'package:dicoding_story_flutter/src/data/data.dart';
-import 'package:dicoding_story_flutter/src/domain/domain.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/auth/auth.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/main/cubit/cubit.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../presentation/pages/main/dashboard/cubit/cubit.dart';
+import '../data/data.dart';
+import '../domain/domain.dart';
+import '../presentation/pages/pages.dart';
 
 GetIt sl = GetIt.instance;
 
-Future<void> serviceLocator({bool isUnitTest = false}) async{
-  if(isUnitTest){
+Future<void> serviceLocator({bool isUnitTest = false}) async {
+  if (isUnitTest) {
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences.setMockInitialValues({});
     await SharedPreferences.getInstance().then((value) {
@@ -22,7 +20,7 @@ Future<void> serviceLocator({bool isUnitTest = false}) async{
     repositories();
     usecase();
     cubit();
-  }else{
+  } else {
     sl.registerSingleton<DioClient>(DioClient());
     dataSource();
     repositories();
@@ -35,12 +33,14 @@ void cubit() {
   sl.registerFactory(() => RegisterCubit(sl()));
   sl.registerFactory(() => LoginCubit(sl()));
   sl.registerFactory(() => StoriesCubit(sl()));
+  sl.registerFactory(() => UploadCubit(sl()));
   sl.registerFactory(() => NavDrawerCubit());
 }
 
 void usecase() {
   sl.registerLazySingleton(() => PostLogin(sl()));
   sl.registerLazySingleton(() => PostRegister(sl()));
+  sl.registerLazySingleton(() => PostStories(sl()));
   sl.registerLazySingleton(() => GetStories(sl()));
 }
 
@@ -49,7 +49,8 @@ void repositories() {
 }
 
 void dataSource() {
-  sl.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasourceImpl(sl()));
+  sl.registerLazySingleton<AuthRemoteDatasource>(
+      () => AuthRemoteDatasourceImpl(sl()));
 }
 
 void initPrefManager(SharedPreferences _initPrefManager) {

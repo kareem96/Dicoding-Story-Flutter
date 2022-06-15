@@ -1,11 +1,15 @@
 import 'package:dicoding_story_flutter/src/core/core.dart';
 import 'package:dicoding_story_flutter/src/data/datasources/datasources.dart';
 import 'package:dicoding_story_flutter/src/domain/domain.dart';
+import 'package:dio/dio.dart';
 
 abstract class AuthRemoteDatasource {
   Future<LoginResponse> login(LoginParams loginParams);
+
   Future<RegisterResponse> register(RegisterParams registerParams);
+
   Future<StoriesResponse> stories(StoriesParams storiesParams);
+
   Future<UploadResponse> upload(UploadParams uploadParams);
 }
 
@@ -17,7 +21,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   @override
   Future<LoginResponse> login(LoginParams loginParams) async {
     try {
-      final _response = await _client.postRequest(ListApi.login, data: loginParams.toJson());
+      final _response =
+          await _client.postRequest(ListApi.login, data: loginParams.toJson());
       final _result = LoginResponse.fromJson(_response.data);
       if (_response.statusCode == 200) {
         return _result;
@@ -30,48 +35,59 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }
 
   @override
-  Future<StoriesResponse> stories(StoriesParams storiesParams) async{
-    try{
-      final _response = await _client.getRequest(ListApi.stories,);
+  Future<StoriesResponse> stories(StoriesParams storiesParams) async {
+    try {
+      final _response = await _client.getRequest(
+        ListApi.stories,
+      );
       final _result = StoriesResponse.fromJson(_response.data);
-      if(_response.statusCode == 200){
+      if (_response.statusCode == 200) {
         return _result;
-      }else{
+      } else {
         throw ServerException(_result.message);
       }
-    }on ServerException catch (e){
+    } on ServerException catch (e) {
       throw ServerException(e.message);
     }
   }
 
   @override
-  Future<RegisterResponse> register(RegisterParams registerParams) async{
-    try{
-      final _response = await _client.postRequest(ListApi.register, data: registerParams.toJson());
+  Future<RegisterResponse> register(RegisterParams registerParams) async {
+    try {
+      final _response = await _client.postRequest(ListApi.register,
+          data: registerParams.toJson());
       final _result = RegisterResponse.fromJson(_response.data);
-      if(_response.statusCode == 200){
+      if (_response.statusCode == 200) {
         return _result;
-      }else{
+      } else {
         throw ServerException(_result.message);
       }
-    }on ServerException catch (e){
+    } on ServerException catch (e) {
       throw ServerException(e.message);
     }
   }
 
   @override
-  Future<UploadResponse> upload(UploadParams uploadParams) async{
-    try{
-      final _response = await _client.postRequest(ListApi.upload, data: uploadParams.toJson());
+  Future<UploadResponse> upload(UploadParams uploadParams) async {
+    try {
+      String fileName = uploadParams.photo!.path.split("/").last;
+      FormData formData = FormData.fromMap({
+        "photo": await MultipartFile.fromFile(uploadParams.photo!.path,
+            filename: fileName),
+        "description": uploadParams.description
+      });
+      final _response = await _client.postMultipart(
+        ListApi.upload,
+        formData,
+      );
       final _result = UploadResponse.fromJson(_response.data);
-      if(_response.statusCode == 200){
+      if (_response.statusCode == 200) {
         return _result;
-      }else{
+      } else {
         throw ServerException(_result.message);
       }
-    }on ServerException catch (e){
+    } on ServerException catch (e) {
       throw ServerException(e.message);
     }
   }
-
 }

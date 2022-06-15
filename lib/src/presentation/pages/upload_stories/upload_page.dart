@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:dicoding_story_flutter/src/domain/domain.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'cubit/cubit.dart';
@@ -50,14 +51,79 @@ class _UploadPageState extends State<UploadPage> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Parent(
       appBar: const MyAppBar().call(),
       child: BlocListener<UploadCubit, UploadState>(
         listener: (_, state){
-          log.d("uploadState" $state)
+          log.d("uploadState $state");
+          switch (state.status){
+            case UploadStatus.loading:
+              context.show();
+              break;
+            case UploadStatus.success:
+              context.dismiss();
+              break;
+            case UploadStatus.failure:
+              context.dismiss();
+              state.message.toString().toToastError();
+              break;
+          }
         },
+        child: Parent(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(Dimens.space24),
+              child: AutofillGroup(
+                child: Form(
+                  key: _keyForm,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      image != null ? Image.file(image!, height: 250, width: 350,) : const Icon(Icons.image, size: 120,),
+
+                      TextForm(
+                        controller: _descriptionController,
+                        maxLine: null,
+                        prefixIcon: const Icon(Icons.description),
+                        minLine: 3,
+                        hint: "Description",
+                        hintText: "Ketikkan sesuatu..",
+                      ),
+                      const SpacerVertical(),
+                      PickImage(
+                          title: "Pick Image Gallery",
+                          onClick: (){
+                            pickImageGallery();
+                          },
+                      ),
+                      const SpacerVertical(),
+                      PickImage(
+                          title: "Pick Image Camera",
+                          onClick: (){
+                            pickImageCamera();
+                          }
+                      ),
+                      Button(
+                          title: "Post Story",
+                          onPressed: (){
+                            print(image);
+                            context.read<UploadCubit>().upload(UploadParams(
+                              description: _descriptionController.text,
+                              photo: image
+                            ));
+                          }
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

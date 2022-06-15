@@ -1,10 +1,7 @@
 import 'package:dicoding_story_flutter/src/di/di.dart';
 import 'package:dicoding_story_flutter/src/presentation/pages/pages.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/upload_stories/upload_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'auth/auth.dart';
-import 'main/main.dart';
 
 class AppRoute {
   AppRoute._();
@@ -35,6 +32,9 @@ class AppRoute {
               create: (_) => sl<RegisterCubit>(),
               child: const RegisterPage(),
             ),
-        upload: (_) => const UploadPage(),
+        upload: (_) => BlocProvider(
+              create: (_) => sl<UploadCubit>(),
+              child: const UploadPage(),
+            ),
       };
 }

@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:dartz/dartz.dart';
 import 'package:dicoding_story_flutter/src/data/datasources/datasources.dart';
 import 'package:dicoding_story_flutter/src/di/di.dart';
-import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
+import 'package:dicoding_story_flutter/src/domain/domain.dart';
+import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:path/path.dart';
+
 
 class DioClient {
   /*String baseUrl = "https://reqres.in";*/
@@ -33,23 +39,23 @@ class DioClient {
     }
   }
 
-  Dio _createDio() => Dio(BaseOptions(
-      baseUrl: baseUrl,
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        if (_auth != null) ...{
-          "Authorization": "Bearer $_auth",
-        }
-      },
-      receiveTimeout: 60000,
-      connectTimeout: 60000,
-      validateStatus: (int? status) {
-        return status! > 0;
-      }));
+  Dio _createDio() =>
+      Dio(BaseOptions(
+          baseUrl: baseUrl,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            if (_auth != null) ...{
+              "Authorization": "Bearer $_auth",
+            }
+          },
+          receiveTimeout: 5000,
+          connectTimeout: 5000,
+          validateStatus: (int? status) {
+            return status! > 0;
+          }));
 
-  Future<Response> getRequest(
-    String url, {
+  Future<Response> getRequest(String url, {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
@@ -59,7 +65,8 @@ class DioClient {
     }
   }
 
-  Future<Response> postRequest(String url, {Map<String, dynamic>? data,}) async {
+  Future<Response> postRequest(String url,
+      {Map<String, dynamic>? data,}) async {
     try {
       return await dio.post(url, data: data);
     } on DioError catch (e) {
@@ -67,11 +74,18 @@ class DioClient {
     }
   }
 
-  Future<Response> postMultipart() async{
-    try{
-      return await dio.post("path");
-    }on DioError catch (e){
+  Future<Response> postMultipart(String url, FormData data,) async {
+    try {
+      /*final uploadParam = UploadParams();
+      var formData = FormData.fromMap({
+        "photo": await MultipartFile.fromFile(uploadParam.photo!.path)
+      });*/
+      /*var formData = FormData.fromMap(data!);*/
+      return await dio.post(url, data: data, options: Options(contentType: "multipart/form-data"));
+    } on DioError catch (e) {
       throw Exception(e.message);
     }
   }
+
+
 }
