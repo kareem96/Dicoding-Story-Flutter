@@ -1,13 +1,11 @@
 import 'package:dicoding_story_flutter/src/core/core.dart';
 import 'package:dicoding_story_flutter/src/data/data.dart';
 import 'package:dicoding_story_flutter/src/di/di.dart';
-import 'package:dicoding_story_flutter/src/presentation/pages/main/main.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'cubit/cubit.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

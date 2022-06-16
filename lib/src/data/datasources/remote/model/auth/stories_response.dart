@@ -3,9 +3,11 @@ import 'package:equatable/equatable.dart';
 
 class StoriesResponse extends Equatable {
   final String? message;
+  final int? page;
+  final int? totalPage;
   final List<DataStories>? data;
 
-  const StoriesResponse({this.message, this.data});
+  const StoriesResponse({this.page, this.totalPage, this.message, this.data});
 
   factory StoriesResponse.fromJson(dynamic json) {
     final message = json["message"] as String?;
@@ -41,7 +43,7 @@ class StoriesResponse extends Equatable {
           ),
         )
         .toList();
-    return Stories(_listStory, message);
+    return Stories(_listStory, message, page ?? 1);
   }
 
   @override

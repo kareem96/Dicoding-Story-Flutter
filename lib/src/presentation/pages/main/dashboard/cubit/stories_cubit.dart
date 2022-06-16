@@ -18,7 +18,10 @@ class StoriesCubit extends Cubit<StoriesState>{
   }
 
   Future<void> _fetchData(StoriesParams storiesParams) async{
-    emit(state.copyWith(status: StoriesStatus.loading));
+    if(storiesParams.page == 1){
+      emit(state.copyWith(status: StoriesStatus.loading));
+    }
+    /*emit(state.copyWith(status: StoriesStatus.loading));*/
     final _data = await _getStories.call(storiesParams);
     _data.fold((l){
       if(l is ServerFailure){

@@ -14,7 +14,11 @@ class GetStories extends UseCase<Stories, StoriesParams> {
 }
 
 class StoriesParams {
-  int message;
+  int page;
 
-  StoriesParams({this.message = 1});
+  StoriesParams({this.page = 1});
+
+  Map<String, dynamic> toJson() => {
+        "page": page,
+      };
 }

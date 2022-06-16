@@ -3,9 +3,7 @@ import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../core/core.dart';
-import 'cubit/cubit.dart';
 
 class MenuDrawer extends StatefulWidget {
   final List<DataHelper> dataMenu;

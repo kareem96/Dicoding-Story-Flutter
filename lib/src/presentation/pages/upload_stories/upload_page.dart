@@ -56,7 +56,9 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: const MyAppBar().call(),
+      appBar: MyAppBar().call(
+
+      ),
       child: BlocListener<UploadCubit, UploadState>(
         listener: (_, state){
           log.d("uploadState $state");
@@ -66,6 +68,7 @@ class _UploadPageState extends State<UploadPage> {
               break;
             case UploadStatus.success:
               context.dismiss();
+              context.back();
               break;
             case UploadStatus.failure:
               context.dismiss();
@@ -91,7 +94,7 @@ class _UploadPageState extends State<UploadPage> {
                         prefixIcon: const Icon(Icons.description),
                         minLine: 3,
                         hint: "Description",
-                        hintText: "Ketikkan sesuatu..",
+                        hintText: "Type something..",
                       ),
                       const SpacerVertical(),
                       PickImage(
@@ -110,13 +113,17 @@ class _UploadPageState extends State<UploadPage> {
                       Button(
                           title: "Post Story",
                           onPressed: (){
-                            print(image);
                             context.read<UploadCubit>().upload(UploadParams(
                               description: _descriptionController.text,
                               photo: image
                             ));
                           }
-                      )
+                      ),Button(
+                          title: "back",
+                          onPressed: (){
+                            context.goTo(AppRoute.mainScreen);
+                          }
+                      ),
                     ],
                   ),
                 ),

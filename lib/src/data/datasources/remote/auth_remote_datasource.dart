@@ -37,9 +37,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   @override
   Future<StoriesResponse> stories(StoriesParams storiesParams) async {
     try {
-      final _response = await _client.getRequest(
-        ListApi.stories,
-      );
+      final _response = await _client.getRequest(ListApi.stories, queryParameters: storiesParams.toJson());
       final _result = StoriesResponse.fromJson(_response.data);
       if (_response.statusCode == 200) {
         return _result;

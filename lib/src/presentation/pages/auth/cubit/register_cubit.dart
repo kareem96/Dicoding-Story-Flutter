@@ -14,13 +14,17 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> register(RegisterParams params) async {
     emit(state.copyWith(status: RegisterStatus.loading));
     final _data = await _postRegister.call(params);
-    _data.fold((l) {
-      if (l is ServerFailure) {
-        emit(
-            state.copyWith(status: RegisterStatus.failure, message: l.message));
-      }
-    },
-        (r) =>
-            emit(state.copyWith(status: RegisterStatus.success, register: r)));
+    _data.fold(
+      (l) {
+        if (l is ServerFailure) {
+          emit(
+            state.copyWith(status: RegisterStatus.failure, message: l.message),
+          );
+        }
+      },
+      (r) => emit(
+        state.copyWith(status: RegisterStatus.success, register: r),
+      ),
+    );
   }
 }

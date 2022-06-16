@@ -49,6 +49,7 @@ class DioClient {
               "Authorization": "Bearer $_auth",
             }
           },
+
           receiveTimeout: 5000,
           connectTimeout: 5000,
           validateStatus: (int? status) {

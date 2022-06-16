@@ -1,11 +1,9 @@
-import 'package:dicoding_story_flutter/src/presentation/pages/main/cubit/cubit.dart';
 import 'package:dicoding_story_flutter/src/presentation/presentations.dart';
 import 'package:dicoding_story_flutter/src/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/domain.dart';
-import 'cubit/cubit.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -18,41 +16,36 @@ class _DashboardPageState extends State<DashboardPage> {
   final ScrollController _scrollController = ScrollController();
   final List<Story> _story = [];
 
+  int _currentPage = 1;
+  int _lastPage = 1;
+
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() async {});
+    _scrollController.addListener(() async {
+      if (_scrollController.position.atEdge) {
+        if (_scrollController.position.pixels != 0) {
+          if (_currentPage < _lastPage) {
+            _currentPage++;
+            await context
+                .read<StoriesCubit>()
+                .fetchStories(StoriesParams(page: _currentPage));
+          }
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Parent(
-      /*child: Button(
-        onPressed: (){
-          try {
-            var message =  sl<PrefManager>().token.toString() ;
-            dismissAllToast(showAnim: true);
-            showToastWidget(
-               Toast(
-                bgColor: Palette.green,
-                icon: Icons.check_circle,
-                message: message,
-                textColor: Colors.white,
-              ),
-              dismissOtherToast: true,
-              position: ToastPosition.top,
-              duration: const Duration(seconds: 3),
-            );
-          } catch (e) {
-            log.e("$e");
-          }
-        },
-        title: 'Check token',
-      ),*/
       child: RefreshIndicator(
         color: Theme.of(context).iconTheme.color,
         onRefresh: () {
-          return context.read<StoriesCubit>().refreshStories(StoriesParams());
+          _currentPage = 1;
+          _lastPage = 1;
+          _story.clear();
+          return context.read<StoriesCubit>().refreshStories(StoriesParams(page: _currentPage));
         },
         child: BlocBuilder<StoriesCubit, StoriesState>(
           builder: (_, state) {
@@ -64,9 +57,13 @@ class _DashboardPageState extends State<DashboardPage> {
               case StoriesStatus.success:
                 final _data = state.stories!;
                 _story.addAll(_data.story);
+                _lastPage = _data.lastPage;
+
                 return ListView.builder(
                     controller: _scrollController,
-                    itemCount: _story.length,
+                    itemCount: _currentPage == _lastPage
+                        ? _story.length
+                        : _story.length + 1,
                     padding: EdgeInsets.symmetric(vertical: Dimens.space16),
                     itemBuilder: (_, index) {
                       return index < _story.length
