@@ -14,8 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'src/presentation/pages/main/main.dart';
-
 Future<void> main() async {
   await serviceLocator();
   WidgetsFlutterBinding.ensureInitialized();

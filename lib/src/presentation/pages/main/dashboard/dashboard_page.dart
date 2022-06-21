@@ -3,6 +3,7 @@ import 'package:dicoding_story_flutter/src/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import '../../../../domain/domain.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -14,22 +15,26 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   final ScrollController _scrollController = ScrollController();
+  final List<Story> _storyOld = [];
   final List<Story> _story = [];
 
   int _currentPage = 1;
-  int _lastPage = 1;
 
   @override
   void initState() {
     super.initState();
+
     _scrollController.addListener(() async {
       if (_scrollController.position.atEdge) {
         if (_scrollController.position.pixels != 0) {
-          if (_currentPage < _lastPage) {
+          if (_currentPage == _currentPage) {
             _currentPage++;
+            showToast("$_currentPage");
             await context
                 .read<StoriesCubit>()
-                .fetchStories(StoriesParams(page: _currentPage));
+                .fetchStories(StoriesParams(
+                  page: _currentPage,
+                ));
           }
         }
       }
@@ -43,9 +48,10 @@ class _DashboardPageState extends State<DashboardPage> {
         color: Theme.of(context).iconTheme.color,
         onRefresh: () {
           _currentPage = 1;
-          _lastPage = 1;
           _story.clear();
-          return context.read<StoriesCubit>().refreshStories(StoriesParams(page: _currentPage));
+          return context.read<StoriesCubit>().refreshStories(StoriesParams(
+                page: _currentPage,
+              ));
         },
         child: BlocBuilder<StoriesCubit, StoriesState>(
           builder: (_, state) {
@@ -57,11 +63,12 @@ class _DashboardPageState extends State<DashboardPage> {
               case StoriesStatus.success:
                 final _data = state.stories!;
                 _story.addAll(_data.story);
-                _lastPage = _data.lastPage;
-
+                if(_data.story != _storyOld){
+                  _storyOld.addAll(_data.story);
+                }
                 return ListView.builder(
                     controller: _scrollController,
-                    itemCount: _currentPage == _lastPage
+                    itemCount: _currentPage != _currentPage
                         ? _story.length
                         : _story.length + 1,
                     padding: EdgeInsets.symmetric(vertical: Dimens.space16),
@@ -134,11 +141,11 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       floatingButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           context.goTo(AppRoute.upload);
         },
         backgroundColor: Theme.of(context).primaryColor,
-        child:  Icon(Icons.add, color: Theme.of(context).primaryColorLight),
+        child: Icon(Icons.add, color: Theme.of(context).primaryColorLight),
       ),
     );
   }

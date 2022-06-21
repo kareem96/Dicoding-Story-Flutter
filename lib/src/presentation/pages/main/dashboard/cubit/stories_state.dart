@@ -22,8 +22,11 @@ class StoriesState extends Equatable {
   final Stories? stories;
   final String? message;
 
-  const StoriesState(
-      {this.status = StoriesStatus.loading, this.stories, this.message});
+  const StoriesState({
+    this.status = StoriesStatus.loading,
+    this.stories,
+    this.message
+  });
 
   StoriesState copyWith({
     StoriesStatus? status,
